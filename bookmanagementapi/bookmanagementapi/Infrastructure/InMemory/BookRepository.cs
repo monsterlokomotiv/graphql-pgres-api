@@ -25,7 +25,7 @@ public class BookRepository : IBookRepository
         }
     };
 
-    public Book? Get(int id)
+    public Book? Get(long id)
     {
         return _books.FirstOrDefault(b => b.Id == id);
     }

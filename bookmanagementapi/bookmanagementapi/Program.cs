@@ -5,10 +5,13 @@ using BookManagement.Infrastructure.InMemory;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddGraphQLServer()
-                .AddQueryType<Query>();
+                .AddQueryType<Query>()
+                .RegisterService<IBookRepository>()
+                .RegisterService<IAuthorRepository>();
 
 var app = builder.Build();
 
