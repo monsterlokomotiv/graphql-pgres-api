@@ -10,6 +10,10 @@ public class BooksDbContext : DbContext
     }
 
     public DbSet<Book> Books { get; set; } = default!;
-    public DbSet<Author> Author { get; set; } = default!;
-     
+    public DbSet<Author> Authors { get; set; } = default!;
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseLowerCaseNamingConvention();
+    }
 }

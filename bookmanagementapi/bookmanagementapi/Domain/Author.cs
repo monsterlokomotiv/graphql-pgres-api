@@ -10,5 +10,5 @@ public class Author
 
     public ReadOnlySpan<char> FullName => (FirstName + LastName).AsSpan();
 
-    public ICollection<Book> Books { get; set; } = Array.Empty<Book>();
+    public virtual ICollection<Book> Books { get; set; }
 }

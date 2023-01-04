@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BookManagement.Migrations
 {
     [DbContext(typeof(BooksDbContext))]
-    [Migration("20230104112248_Initial")]
+    [Migration("20230104120827_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -28,64 +28,78 @@ namespace BookManagement.Migrations
             modelBuilder.Entity("AuthorBook", b =>
                 {
                     b.Property<long>("AuthorsId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("authorsid");
 
                     b.Property<long>("BooksId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("booksid");
 
-                    b.HasKey("AuthorsId", "BooksId");
+                    b.HasKey("AuthorsId", "BooksId")
+                        .HasName("pk_authorbook");
 
-                    b.HasIndex("BooksId");
+                    b.HasIndex("BooksId")
+                        .HasDatabaseName("ix_authorbook_booksid");
 
-                    b.ToTable("AuthorBook");
+                    b.ToTable("authorbook", (string)null);
                 });
 
             modelBuilder.Entity("BookManagement.Domain.Author", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateOnly>("BirthDay")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("birthday");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("firstname");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("lastname");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_authors");
 
-                    b.ToTable("Author");
+                    b.ToTable("authors", (string)null);
                 });
 
             modelBuilder.Entity("BookManagement.Domain.Book", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<DateOnly>("PublishedDate")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("publisheddate");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("title");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_books");
 
-                    b.ToTable("Books");
+                    b.ToTable("books", (string)null);
                 });
 
             modelBuilder.Entity("AuthorBook", b =>
@@ -94,13 +108,15 @@ namespace BookManagement.Migrations
                         .WithMany()
                         .HasForeignKey("AuthorsId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_authorbook_authors_authorsid");
 
                     b.HasOne("BookManagement.Domain.Book", null)
                         .WithMany()
                         .HasForeignKey("BooksId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_authorbook_books_booksid");
                 });
 #pragma warning restore 612, 618
         }
