@@ -1,23 +1,26 @@
+using BookManagement;
+using BookManagement.Application.Abstractions;
+using BookManagement.Infrastructure.InMemory;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddGraphQLServer()
+                .AddQueryType<Query>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () =>
-{
-    return "HelloWorld!";
-})
-.WithOpenApi();
+app.MapGraphQL();
 
 app.Run();
