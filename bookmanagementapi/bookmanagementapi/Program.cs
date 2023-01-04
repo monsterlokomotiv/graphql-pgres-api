@@ -1,4 +1,6 @@
-using BookManagement;
+using BookManagement.GraphQL.DataLoaders;
+using BookManagement.GraphQL.Mutations;
+using BookManagement.GraphQL.Queries;
 using BookManagement.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +13,8 @@ builder.Services.RegisterEntityFramework(builder.Configuration.GetConnectionStri
 
 builder.Services.AddGraphQLServer()
                 .AddQueryType<Query>()
+                .AddMutationType<Mutation>()
+                .AddDataLoader<AuthorsByIdDataLoader>()
                 .RegisterService<BooksDbContext>();
 
 var app = builder.Build();

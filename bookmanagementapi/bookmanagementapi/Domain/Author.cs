@@ -10,5 +10,6 @@ public class Author
 
     public ReadOnlySpan<char> FullName => (FirstName + LastName).AsSpan();
 
-    public virtual ICollection<Book> Books { get; set; }
+    public virtual ICollection<Book> Books { get; set; } = default!;
+    public virtual ICollection<Series> Series { get; set; } = default!;
 }

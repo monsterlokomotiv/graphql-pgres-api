@@ -29,7 +29,8 @@ namespace BookManagement.Infrastructure.EntityFramework.EntityConfiguration
                 .IsRequired()
                 .HasMaxLength(150);
 
-            builder.HasMany<Author>().WithMany(auth => auth.Books);
+            builder.HasOne(book => book.Category).WithMany(x => x.Books);
+            builder.HasMany(book => book.Authors).WithMany(auth => auth.Books);
         }
     }
 }

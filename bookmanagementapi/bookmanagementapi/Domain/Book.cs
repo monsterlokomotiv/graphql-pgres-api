@@ -8,5 +8,9 @@ public class Book
     public DateOnly PublishedDate { get; set; } = DateOnly.MinValue;
     public string Title { get; set; } = string.Empty;
 
-    public virtual ICollection<Author> Authors { get; set; }
+    public long CategoryId { get; set; }
+    public virtual Category Category { get; set; }
+    public long SeriesId { get; set; }
+    public virtual Series Series { get; set; }
+    public virtual ICollection<Author> Authors { get; set; } = default!;
 }
