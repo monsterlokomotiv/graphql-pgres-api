@@ -15,6 +15,9 @@ builder.Services.AddGraphQLServer()
                 .AddQueryType<Query>()
                 .AddMutationType<Mutation>()
                 .AddDataLoader<AuthorsByIdDataLoader>()
+                .AddDataLoader<BooksByIdDataLoader>()
+                .AddDataLoader<CategoriesByIdDataLoader>()
+                .AddDataLoader<SeriesByIdDataLoader>()
                 .RegisterService<BooksDbContext>();
 
 var app = builder.Build();

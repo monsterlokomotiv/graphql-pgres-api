@@ -17,7 +17,7 @@ public class AuthorsByIdDataLoader : BatchDataLoader<long, Author>
 
     protected async override Task<IReadOnlyDictionary<long, Author>> LoadBatchAsync(IReadOnlyList<long> keys, CancellationToken cancellationToken)
     {
-        return await _dbContext.Authors.Where(b => keys.Contains(b.Id))
-            .ToDictionaryAsync(b => b.Id, cancellationToken);
+        return await _dbContext.Authors.Where(a => keys.Contains(a.Id))
+            .ToDictionaryAsync(a => a.Id, cancellationToken);
     }
 }
