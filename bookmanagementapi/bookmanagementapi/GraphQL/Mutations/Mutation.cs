@@ -18,4 +18,27 @@ public class Mutation
         await context.SaveChangesAsync();
         return new AddAuthorPayload(author);
     }
+
+    public async Task<AddOrderPayload> AddOrderAsync(BooksDbContext context, AddOrderInput input)
+    {
+        var order = new Order()
+        {
+            Address = new OrderAddress()
+            {
+                City = input.City,
+                CountryISOCode = input.CountryISOCode,
+                PostalCode = input.PostalCode,
+                Street = input.Street,
+                Person = new Person()
+                {
+                    FirstName = input.FirstName,
+                    LastName = input.LastName
+                }
+            }
+        };
+
+        context.Orders.Add(order);
+        await context.SaveChangesAsync();
+        return new AddOrderPayload(order);
+    }
 }

@@ -5,11 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookManagement.GraphQL.Queries;
 
-public class Query
+public partial class Query
 {
-    public Book[] GetBooks(BooksDbContext context) => context.Books.ToArray();
-
-    public Task<Book[]> GetBook(BooksDbContext context, long id) => context.Books.Where(b => b.Id == id).Include(b => b.Authors).ToArrayAsync();
+    
     public Task<Author> GetAuthor(AuthorsByIdDataLoader dataLoader, long id, CancellationToken cancellationToken) =>
         dataLoader.LoadAsync(id, cancellationToken);
+
+    [UseProjection]
+    public IQueryable<Order> GetOrders(BooksDbContext context) => context.Orders;
+
+    [UseProjection]
+    public IQueryable<Order> GetOrdersByReceiverName(BooksDbContext context, string firstName) => context.Orders.Where(o => o.Address.Person.FirstName.Contains(firstName)).AsQueryable();
 }

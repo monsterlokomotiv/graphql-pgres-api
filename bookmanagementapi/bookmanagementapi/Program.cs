@@ -1,24 +1,14 @@
-using BookManagement.GraphQL.DataLoaders;
-using BookManagement.GraphQL.Mutations;
-using BookManagement.GraphQL.Queries;
+using BookManagement.GraphQL;
 using BookManagement.Infrastructure.EntityFramework;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 
-builder.Services.RegisterEntityFramework(builder.Configuration.GetConnectionString("BooksDB"));
 
-builder.Services.AddGraphQLServer()
-                .AddQueryType<Query>()
-                .AddMutationType<Mutation>()
-                .AddDataLoader<AuthorsByIdDataLoader>()
-                .AddDataLoader<BooksByIdDataLoader>()
-                .AddDataLoader<CategoriesByIdDataLoader>()
-                .AddDataLoader<SeriesByIdDataLoader>()
-                .RegisterService<BooksDbContext>();
+builder.Services.RegisterEntityFramework(builder.Configuration.GetConnectionString("BooksDB"));
+builder.Services.ConfigureGraphQL();
 
 var app = builder.Build();
 

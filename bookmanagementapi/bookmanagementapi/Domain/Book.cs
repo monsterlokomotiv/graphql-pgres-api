@@ -9,8 +9,9 @@ public class Book
     public string Title { get; set; } = string.Empty;
 
     public long CategoryId { get; set; }
-    public virtual Category Category { get; set; }
+    public virtual Category Category { get; set; } = default!;
+    public virtual Publisher Publisher { get; set; } = default!;
     public long SeriesId { get; set; }
-    public virtual Series Series { get; set; }
+    public virtual Series Series { get; set; } = default!;
     public virtual ICollection<Author> Authors { get; set; } = default!;
 }
